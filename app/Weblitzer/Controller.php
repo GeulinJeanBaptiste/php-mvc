@@ -12,13 +12,14 @@ class Controller
 
     private $layout = 'layout';
 
-    protected function render($viewer,$variable = []){
+    protected function render($viewer, $variable = [])
+    {
         $view = new View();
         ob_start();
         extract($variable);
-        require $this->getViewPath().str_replace('.','/',$viewer).'.php';
+        require $this->getViewPath() . str_replace('.', '/', $viewer) . '.php';
         $content = ob_get_clean();
-        require $this->getViewPath().'layout/'.$this->layout.'.php';
+        require $this->getViewPath() . 'layout/' . $this->layout . '.php';
         die();
     }
 
@@ -44,11 +45,18 @@ class Controller
      * print_r coké
      * @param  mixed $var La variable a déboger
      */
-    protected function debug($var)
+    protected function dbug($var)
     {
-        echo '<pre style="height:100px;overflow-y: scroll;font-size:.8em;padding: 10px; font-family: Consolas, Monospace; background-color: #000; color: #fff;">';
+        echo '<pre style="font-size:.8em;padding: 10px; font-family: Consolas, Monospace; background-color: #000; color: #fff;">';
         print_r($var);
         echo '</pre>';
+    }
+    protected function dd($var)
+    {
+        echo '<pre style="font-size:.8em;padding: 10px; font-family: Consolas, Monospace; background-color: #000; color: #fff;">';
+        print_r($var);
+        echo '</pre>';
+        die();
     }
 
     /**
@@ -60,31 +68,30 @@ class Controller
     {
         header('Content-type: application/json');
         $json = json_encode($data, JSON_PRETTY_PRINT);
-        if($json){
+        if ($json) {
             die($json);
-        }
-        else {
+        } else {
             die('Error in json encoding');
         }
     }
 
-    protected function cleanXss($post){
-        foreach($post as $k=>$v) {
-            $post[$k]=trim(strip_tags($v)); //protection 1 XSS
+    protected function cleanXss($post)
+    {
+        foreach ($post as $k => $v) {
+            $post[$k] = trim(strip_tags($v)); //protection 1 XSS
         }
         return $post;
     }
 
-    protected function redirect($url,$args = array())
+    protected function redirect($url, $args = array())
     {
         $view = new View();
-        if(!empty($args)) {
-            $realurl = $view->path($url,$args);
+        if (!empty($args)) {
+            $realurl = $view->path($url, $args);
         } else {
             $realurl = $view->path($url);
         }
-        header('Location: '.$realurl);
+        header('Location: ' . $realurl);
         die();
     }
-
 }
