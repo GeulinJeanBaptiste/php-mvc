@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Weblitzer\Controller;
 use App\Model\PostModel;
 use App\Model\UserModel;
+use App\Service\Form;
 
 /**
  *
@@ -21,8 +22,17 @@ class ArticleController extends Controller
             'user' => $user,
         ));
     }
+    public function create()
+    {
+        $errors = [];
+        $formAdd = new Form($errors);
+        $this->render('app.article.create', [
+            'formAdd' => $formAdd,
+        ]);
+    }
     public function show($id)
     {
+        // $article = $this->isArticleExists($id);
         $show = PostModel::findById($id);
         $this->render('app.show.index', array(
             'show' => $show,
@@ -46,8 +56,9 @@ class ArticleController extends Controller
     {
         $this->dbug($id);
     }
-    public function create()
+    public function isArticleExists($id)
     {
-        // $this->render('app.article.create');
+        $article = PostModel::findById($id);
+        return (empty($article)) ? $this->Abort404() : $article;
     }
 }

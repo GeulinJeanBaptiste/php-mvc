@@ -8,6 +8,7 @@ $routes = [
     ['about', 'about', 'index'],
     // Article
     ['articles', 'article', 'index'],
+    ['create', 'article', 'create'],
     ['article', 'article', 'show', ['id']],
-    ['delete', 'article', 'delete', ['id']]
+    ['delete', 'article', 'delete', ['id']],
 ];

@@ -36,37 +36,3 @@
 </body>
 
 </html>
-<script>
-  function changeCardStyle() {
-    // Liste des couleurs possibles et de leurs box-shadows correspondants
-    const styles = {
-      red: {
-        // borderColor: 'red',
-        boxShadow: '0 0 8px red, inset 0 0 8px red, 0 0 16px red, inset 0 0 16px red, 0 0 32px red, inset 0 0 32px red'
-      },
-      white: {
-        // borderColor: 'white',
-        boxShadow: '0 0 8px white, inset 0 0 8px white, 0 0 16px white, inset 0 0 16px white, 0 0 32px white, inset 0 0 32px white'
-      }
-
-    };
-
-    // Obtient tous les éléments avec la classe .card
-    const cards = document.querySelectorAll('.menu');
-
-    // Change la couleur de bordure et le box-shadow avec une transition
-    cards.forEach(card => {
-      // Définit la transition
-      card.style.transition = 'border-color 0.5s ease, box-shadow 0.5s ease';
-
-      // Applique le nouveau style
-      const randomStyleKey = Object.keys(styles)[Math.floor(Math.random() * Object.keys(styles).length)];
-      const randomStyle = styles[randomStyleKey];
-      card.style.borderColor = randomStyle.borderColor;
-      card.style.boxShadow = randomStyle.boxShadow;
-    });
-  }
-
-  // Appelle la fonction changeCardStyle toutes les 5 secondes
-  setInterval(changeCardStyle, 100);
-</script>
