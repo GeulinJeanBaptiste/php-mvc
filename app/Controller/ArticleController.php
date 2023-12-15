@@ -6,6 +6,7 @@ use App\Weblitzer\Controller;
 use App\Model\PostModel;
 use App\Model\UserModel;
 use App\Service\Form;
+use App\Service\Validation;
 
 /**
  *
@@ -15,50 +16,111 @@ class ArticleController extends Controller
 
     public function index()
     {
+
         $articles = PostModel::all();
-        $user =  new UserModel;
-        $this->render('app.article.index', array(
-            'articles' => $articles,
-            'user' => $user,
-        ));
+        $nbArticles = PostModel::count();
+        $user = new UserModel;
+
+        $this->render(
+            'app.article.index',
+            [
+                'articles' => $articles,
+                'nbArticles' =>  $nbArticles,
+                'user' => $user
+            ]
+        );
     }
     public function create()
     {
         $errors = [];
+        // $this->dbug($_POST);
+        // Test de validation formulaire
+        if (!empty($_POST['submitted'])) :
+            $postArticle = $this->cleanXss($_POST);
+
+            $validerArticle = new Validation;
+
+            $errors['title'] = $validerArticle->textValid($postArticle['title'], 'title', 5, 100);
+            $errors['content'] = $validerArticle->textValid($postArticle['content'], 'content', 5, 1000);
+
+            if ($validerArticle->IsValid($errors)) :
+                //Insertion des données du formulaire en base de donnée
+                PostModel::insert($postArticle);
+                $this->redirect('articles');
+            endif;
+        endif;
+
         $formAdd = new Form($errors);
+        $users = UserModel::all();
+
         $this->render('app.article.create', [
+
             'formAdd' => $formAdd,
+            'users' => $users
         ]);
     }
-    public function show($id)
+
+    public function edit()
     {
-        // $article = $this->isArticleExists($id);
-        $show = PostModel::findById($id);
-        $this->render('app.show.index', array(
-            'show' => $show,
-        ));
-        // $this->dbug($show);
+        $articleEdit = $this->isArticleExist($id);
+        $errors = [];
+        // $this->dbug($_POST);
+        // Test de validation formulaire
+        if (!empty($_POST['submitted'])) :
+            $postArticleEdit = $this->cleanXss($_POST);
+
+            $validerArticleEdit = new Validation;
+
+            $errors['title'] = $validerArticleEdit->textValid($postArticleEdit['title'], 'title', 5, 100);
+            $errors['content'] = $validerArticleEdit->textValid($postArticleEdit['content'], 'content', 5, 1000);
+            if ($validerArticleEdit->IsValid($errors)) :
+                //Insertion des données du formulaire en base de donnée
+                PostModel::update($postArticle);
+                $this->redirect('articles');
+            endif;
+        endif;
+
+        $formAddEdit = new Form($errors);
+        $users = UserModel::all();
+
+        $this->render('app.article.editarticle', [
+
+            'formAddEdit' => $formAddEdit,
+            'users' => $users
+        ]);
     }
     /**
      * @
      */
-    public function Page404()
+    public function show($id)
     {
-        $this->render('app.default.404');
-    }
+        $article = $this->isArticleExist($id);
+        $user = new UserModel;
 
+        $this->render(
+            'app.article.show',
+            [
+                'article' => $article,
+                'user' => $user,
+            ]
+        );
+    }
     public function delete($id)
     {
+        $articleDelete = $this->isArticleExist($id);
         PostModel::delete($id);
         $this->redirect('articles');
     }
-    public function edit($id)
-    {
-        $this->dbug($id);
-    }
-    public function isArticleExists($id)
+    public function isArticleExist($id)
     {
         $article = PostModel::findById($id);
+
+        // if (empty($article)):
+        //     $this->Abort404();
+        // endif;
+
+        // return $article;
+
         return (empty($article)) ? $this->Abort404() : $article;
     }
 }

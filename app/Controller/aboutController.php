@@ -12,10 +12,7 @@ class AboutController extends Controller
 
     public function index()
     {
-        $about = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum, minima?';
-        $this->render('app.about.index', [
-            'about' => $about,
-        ]);
+        $this->render('app.default.about');
     }
 
     /**

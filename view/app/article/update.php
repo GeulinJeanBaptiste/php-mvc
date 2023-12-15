@@ -2,17 +2,17 @@
     <h1>Ajouter un article.</h1>
 
     <form method="POST">
-        <?= $formAdd->label('title') ?>
-        <?= $formAdd->input('title') ?>
-        <?= $formAdd->error('title') ?>
+        <?= $formAddEdit->label('title') ?>
+        <?= $formAddEdit->input('title', 'text', $articleEdit->title) ?>
+        <?= $formAddEdit->error('title') ?>
 
-        <?= $formAdd->label('content') ?>
-        <?= $formAdd->textarea('content') ?>
-        <?= $formAdd->error('content') ?>
+        <?= $formAddEdit->label('content') ?>
+        <?= $formAddEdit->textarea('content', $articleEdit->content) ?>
+        <?= $formAddEdit->error('content') ?>
 
-        <?= $formAdd->select('authors', $users, 'firstname') ?>
+        <?= $formAddEdit->select('authors', $users, 'firstname') ?>
 
-        <?= $formAdd->submit('submitted', 'Ajouter un article') ?>
+        <?= $formAddEdit->submit('submitted', 'Ajouter un article') ?>
     </form>
 </section>
 <style>

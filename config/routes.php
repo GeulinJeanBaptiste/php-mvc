@@ -11,4 +11,5 @@ $routes = [
     ['create', 'article', 'create'],
     ['article', 'article', 'show', ['id']],
     ['delete', 'article', 'delete', ['id']],
+    ['edit', 'article', 'edit', ['id']],
 ];
