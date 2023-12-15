@@ -13,10 +13,8 @@ use App\Service\Validation;
  */
 class ArticleController extends Controller
 {
-
     public function index()
     {
-
         $articles = PostModel::all();
         $nbArticles = PostModel::count();
         $user = new UserModel;
@@ -60,11 +58,11 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function edit()
+    public function edit($id)
     {
         $articleEdit = $this->isArticleExist($id);
         $errors = [];
-        // $this->dbug($_POST);
+
         // Test de validation formulaire
         if (!empty($_POST['submitted'])) :
             $postArticleEdit = $this->cleanXss($_POST);
@@ -73,20 +71,20 @@ class ArticleController extends Controller
 
             $errors['title'] = $validerArticleEdit->textValid($postArticleEdit['title'], 'title', 5, 100);
             $errors['content'] = $validerArticleEdit->textValid($postArticleEdit['content'], 'content', 5, 1000);
+            
             if ($validerArticleEdit->IsValid($errors)) :
-                //Insertion des données du formulaire en base de donnée
-                PostModel::update($postArticle);
-                $this->redirect('articles');
+            //Insertion des données du formulaire en base de donnée
+
+            // $this->redirect('articles');
             endif;
         endif;
 
         $formAddEdit = new Form($errors);
-        $users = UserModel::all();
 
         $this->render('app.article.editarticle', [
 
             'formAddEdit' => $formAddEdit,
-            'users' => $users
+            'articleEdit' => $articleEdit
         ]);
     }
     /**
