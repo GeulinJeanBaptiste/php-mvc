@@ -23,12 +23,20 @@
         gap: 0.5rem;
         margin-top: 1rem;
         width: 100%;
-        max-width: 400px;
+        max-width: 600px;
         margin-inline: auto;
         padding: 1rem;
         border: 1px solid #ccc;
         border-radius: 0.5rem;
         background-color: #f5f5f5;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    textarea[name=content] {
+        resize: both;
+        min-width: 400px;
+        min-height: 200px;
+        max-width: 500px;
+        max-height: 200px;
     }
 </style>

@@ -31,7 +31,7 @@ class ArticleController extends Controller
     public function create()
     {
         $errors = [];
-        // $this->dbug($_POST);
+
         // Test de validation formulaire
         if (!empty($_POST['submitted'])) :
             $postArticle = $this->cleanXss($_POST);
