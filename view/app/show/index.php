@@ -1,18 +1,14 @@
-<p><a href="<?= $view->path('create') ?>" class="btn">Ajouter un commentaire</a></p>
-<div class="cards"> <?php foreach ($articles as $article) { ?>
-        <article>
-            <h3><a href="<?= $view->path('article', [$article->id]); ?>"><?= $article->title ?></a>
-            </h3>
-        </article>
-        <div class="card">
-            <p>Autheur:<?= $user->findById($article->author, 'id')->lastname; ?></p>
-            <p>Nom:<?= $user->findById($article->author, 'id')->firstname; ?></p>
-            <p>Email:<?= $user->findById($article->author, 'id')->email; ?></p>
-            <p>Titre:<?= $article->title ?></p>
-            <p>Commentaire:<br><?= $article->content ?></p>
-        </div>
-    <?php } ?>
+<div class="card">
+    <h1>Autheur: </h1>
+    <h3>Titre: <?= $show->title ?></h3>
+    <p>Commentaires:<br><?= $show->content ?></p>
+    <p>Créer le: <?= $show->createdAt ?></p>
+    <p>Modifier le: <?= $show->modifiedAt ?></p>
+    <p><a href="<?= $view->path('delete', [$show->id]) ?> " class="btn">Supprimer</a></p>
+    <p><a href="<?= $view->path('edit', [$show->id]) ?>" class="btn">Modifier</a></p>
 </div>
+
+
 <script>
     function changeCardStyle() {
         // Liste des couleurs possibles et de leurs box-shadows correspondants
