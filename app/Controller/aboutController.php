@@ -12,7 +12,7 @@ class AboutController extends Controller
 
     public function index()
     {
-        $this->render('app.default.about');
+        $this->render('app.about.index');
     }
 
     /**
