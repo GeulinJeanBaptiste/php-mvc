@@ -60,6 +60,7 @@ class ArticleController extends Controller
 
     public function edit($id)
     {
+
         $articleEdit = $this->isArticleExist($id);
         $errors = [];
 
@@ -71,7 +72,7 @@ class ArticleController extends Controller
 
             $errors['title'] = $validerArticleEdit->textValid($postArticleEdit['title'], 'title', 5, 100);
             $errors['content'] = $validerArticleEdit->textValid($postArticleEdit['content'], 'content', 5, 1000);
-            
+
             if ($validerArticleEdit->IsValid($errors)) :
             //Insertion des données du formulaire en base de donnée
 

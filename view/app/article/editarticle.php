@@ -1,5 +1,5 @@
 <section>
-    <h1>Ajouter un article.</h1>
+    <h1>Modifier cette article.</h1>
 
     <form method="POST">
         <?= $formAddEdit->label('title') ?>
@@ -10,9 +10,8 @@
         <?= $formAddEdit->textarea('content', $articleEdit->content) ?>
         <?= $formAddEdit->error('content') ?>
 
-        <?= $formAddEdit->select('authors', $users, 'firstname') ?>
 
-        <?= $formAddEdit->submit('submitted', 'Ajouter un article') ?>
+        <?= $formAddEdit->submit('submitted', 'Modifier cette article') ?>
     </form>
 </section>
 <style>
