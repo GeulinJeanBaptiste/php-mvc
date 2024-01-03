@@ -17,7 +17,7 @@ class PostModel extends ModelMVC
             [
                 $post['title'],
                 $post['content'],
-                $post['author'],
+                $post['author']
             ]
         );
     }

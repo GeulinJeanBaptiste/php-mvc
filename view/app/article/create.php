@@ -10,7 +10,7 @@
         <?= $formAdd->textarea('content') ?>
         <?= $formAdd->error('content') ?>
 
-        <?= $formAdd->select('authors', $users, 'firstname') ?>
+        <?= $formAdd->select('author', $users, 'firstname') ?>
 
         <?= $formAdd->submit('submitted', 'Ajouter un article') ?>
     </form>

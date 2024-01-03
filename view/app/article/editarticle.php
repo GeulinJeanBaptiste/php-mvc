@@ -3,11 +3,11 @@
 
     <form method="POST">
         <?= $formAddEdit->label('title') ?>
-        <?= $formAddEdit->input('title', 'text', $articleEdit->title) ?>
+        <?= $formAddEdit->input('title', 'text', $articleEdit['title']) ?>
         <?= $formAddEdit->error('title') ?>
         <div class="form-group">
             <?= $formAddEdit->label('content') ?>
-            <?= $formAddEdit->textarea('content', $articleEdit->content) ?>
+            <?= $formAddEdit->textarea('content', $articleEdit['content']) ?>
             <?= $formAddEdit->error('content') ?>
         </div>
         <?= $formAddEdit->submit('submitted', 'Modifier cette article') ?>

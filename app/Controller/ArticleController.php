@@ -50,7 +50,7 @@ class ArticleController extends Controller
 
         $formAdd = new Form($errors);
         $users = UserModel::all();
-
+        // $this->dd($users);
         $this->render('app.article.create', [
 
             'formAdd' => $formAdd,

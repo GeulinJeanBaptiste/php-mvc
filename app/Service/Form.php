@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Service;
+
 /**
  *  class Form
  *  Permet de generer un formulaire
@@ -9,9 +11,9 @@ class Form
     protected $post;
     protected $error;
 
-    function __construct($error = array(),$method = 'post')
+    function __construct($error = array(), $method = 'post')
     {
-        if($method == 'post') {
+        if ($method == 'post') {
             $this->post = $_POST;
         } else {
             $this->post = $_GET;
@@ -25,29 +27,28 @@ class Form
      */
     private function arround($html)
     {
-        return '<div class="form-control">'.$html.'</div>';
+        return '<div class="form-control">' . $html . '</div>';
     }
 
     /**
      * @param $name string
      * @return string
      */
-    private function getValue($name,$data)
+    private function getValue($name, $data)
     {
-        if(!empty($data)) {
-            return !empty($this->post[$name]) ? $this->post[$name] : $data ;
+        if (!empty($data)) {
+            return !empty($this->post[$name]) ? $this->post[$name] : $data;
         } else {
-            return !empty($this->post[$name]) ? $this->post[$name] : null ;
+            return !empty($this->post[$name]) ? $this->post[$name] : null;
         }
-
     }
     /**
      * @param $name string
      * @return string
      */
-    public function input($name,$type = 'text',$data = null)
+    public function input($name, $type = 'text', $data = null)
     {
-        return $this->arround('<input type="'.$type.'" id="'.$name.'" name="'.$name.'" value="'.$this->getValue($name,$data).'">');
+        return $this->arround('<input type="' . $type . '" id="' . $name . '" name="' . $name . '" value="' . $this->getValue($name, $data) . '">');
     }
 
     /**
@@ -57,7 +58,7 @@ class Form
      */
     public function textarea($name, $data = null)
     {
-        return $this->arround('<textarea name="'.$name.'">'.$this->getValue($name,$data).'</textarea>');
+        return $this->arround('<textarea name="' . $name . '">' . $this->getValue($name, $data) . '</textarea>');
     }
 
     /**
@@ -65,9 +66,9 @@ class Form
      * @param $value string
      * @return string
      */
-    public function submit($name = 'submitted',$value='Envoyer')
+    public function submit($name = 'submitted', $value = 'Envoyer')
     {
-        return '<input type="submit" name="'.$name.'" id="'.$name.'" value="'.$value.'">';
+        return '<input type="submit" name="' . $name . '" id="' . $name . '" value="' . $value . '">';
     }
 
     /**
@@ -76,8 +77,8 @@ class Form
      */
     public function error($name)
     {
-        if(!empty($this->error[$name])) {
-            return '<span class="error">'.$this->error[$name].'</span>';
+        if (!empty($this->error[$name])) {
+            return '<span class="error">' . $this->error[$name] . '</span>';
         }
         return null;
     }
@@ -87,10 +88,10 @@ class Form
      * @param $label valeur du label
      * @return string
      */
-    public function label($name,$label = null)
+    public function label($name, $label = null)
     {
         //$text = ($label === null) ? $name : $label;
-        return '<label for="'.$name.'">'.ucfirst($name).'</label>';
+        return '<label for="' . $name . '">' . ucfirst($name) . '</label>';
     }
 
     /**
@@ -102,17 +103,17 @@ class Form
      */
     public function select($name, $entitys, $column, $data = '', $idd = 'id')
     {
-        $html = '<select name="'.$name.'">';
+        $html = '<select name="' . $name . '">';
         foreach ($entitys as $entity) {
-            if(!empty($data) && $data == $entity->$idd){
+            if (!empty($data) && $data == $entity[$idd]) {
                 $selected = ' selected="selected"';
             } else {
                 $selected = '';
             }
-            $html .= '<option value="'.$entity->$idd.'"'.$selected.'>'.$entity->$column.'</option>';
+            // $html .= '<option value="'.$entity->$idd.'"'.$selected.'>'.$entity->$column.'</option>';
+            $html .= '<option value="' . $entity[$idd] . '"' . $selected . '>' . $entity[$column] . '</option>';
         }
         $html .= '</select>';
         return $html;
     }
-
 }

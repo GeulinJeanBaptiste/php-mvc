@@ -1,12 +1,15 @@
 <?php
+
 namespace App\Weblitzer;
+
 use \PDO;
 
 /**
  * Class Autoloader
  * @package Tutoriel
  */
-class Database {
+class Database
+{
 
 
     private $bd_name;
@@ -17,9 +20,9 @@ class Database {
     private $pdo;
 
 
-    public function __construct($bd_name,$bd_user = 'root',$bd_pass = 'root',$bd_host="localhost")
+    public function __construct($bd_name, $bd_user = 'root', $bd_pass = 'root', $bd_host = "localhost")
     {
-        if(!empty($bd_name)) {
+        if (!empty($bd_name)) {
             $this->bd_name = $bd_name;
         } else {
             $config = new Config();
@@ -33,15 +36,15 @@ class Database {
 
     private function getPdo()
     {
-        if($this->pdo === null) {
+        if ($this->pdo === null) {
             try {
-                $pdo = new PDO('mysql:host='.$this->bd_host.';dbname='.$this->bd_name, $this->bd_user, $this->bd_pass, array(
+                $pdo = new PDO('mysql:host=' . $this->bd_host . ';dbname=' . $this->bd_name, $this->bd_user, $this->bd_pass, array(
                     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+                    /* PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, */
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING
                 ));
-            }
-            catch (PDOException $e) {
+            } catch (PDOException $e) {
                 echo 'Erreur de connexion : ' . $e->getMessage();
             }
             $this->pdo = $pdo;
@@ -49,11 +52,11 @@ class Database {
         return $this->pdo;
     }
 
-    public function query($sql,$className)
+    public function query($sql, $className)
     {
         $query = $this->getPdo()->prepare($sql);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_CLASS,$className);
+        return $query->fetchAll();
     }
 
     public function aggregation($sql)
@@ -63,25 +66,23 @@ class Database {
         return $query->fetchColumn();
     }
 
-    public function prepare($sql,$bind,$className,$one = false)
+    public function prepare($sql, $bind, $className, $one = false)
     {
         $query = $this->getPdo()->prepare($sql);
 
         $query->execute($bind);
 
-        $query->setFetchMode(PDO::FETCH_CLASS,$className);
-        if($one) {
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        if ($one) {
             return $query->fetch();
         } else {
             return $query->fetchAll();
         }
     }
 
-    public function prepareInsert($sql,$bind)
+    public function prepareInsert($sql, $bind)
     {
         $query = $this->getPdo()->prepare($sql);
         $query->execute($bind);
     }
-
-
 }

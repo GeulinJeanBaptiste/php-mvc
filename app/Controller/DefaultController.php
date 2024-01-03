@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Weblitzer\Controller;
 
 /**
- *
+ * 
  */
 class DefaultController extends Controller
 {
@@ -14,7 +14,7 @@ class DefaultController extends Controller
     {
         $message = 'Bienvenue sur le framework MVC';
 
-        $this->render('app.default.frontpage',array(
+        $this->render('app.default.frontpage', array(
             'message' => $message,
         ));
     }
@@ -26,5 +26,4 @@ class DefaultController extends Controller
     {
         $this->render('app.default.404');
     }
-
 }
